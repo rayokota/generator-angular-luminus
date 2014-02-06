@@ -1,25 +1,11 @@
 (ns <%= baseName %>.models.schema
-  (:use [lobos.core :only (defcommand migrate)])
-  (:require [noir.io :as io]
-            [lobos.migration :as lm]))
+  (:require [noir.io :as io]))
 
-(def db-store "site.db")
+(def db-path "/tmp/mydb")
 
-(def db-spec {:classname "org.h2.Driver"
-              :subprotocol "h2"
-              :subname (str (io/resource-path) db-store)
-              :user "sa"
-              :password ""
+(def db-spec {:classname "org.apache.derby.jdbc.EmbeddedDriver"
+              :subprotocol "derby"
+              :subname db-path
+              :create true
               :naming {:keys clojure.string/lower-case
                        :fields clojure.string/upper-case}})
-
-(defcommand pending-migrations []
-  (lm/pending-migrations db-spec sname))
-
-(defn actualized?
-  "checks if there are no pending migrations"
-  []
-  (empty? (pending-migrations)))
-
-(def actualize migrate)
-

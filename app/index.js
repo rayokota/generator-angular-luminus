@@ -62,14 +62,15 @@ AngularLuminusGenerator.prototype.app = function app() {
   this.copy('gitignore', '.gitignore');
 
   var publicDir = 'resources/public/'
+  var migrationsDir = 'migrations/'
   var srcDir = 'src/'
   var appDir = srcDir + this.baseName + '/';
   var modelsDir = appDir + 'models/'
   var routesDir = appDir + 'routes/'
   var viewsDir = appDir + 'views/'
-  var lobosDir = srcDir + 'lobos/'
   var testDir = 'test/' + this.baseName + '/test/';
   this.mkdir(publicDir);
+  this.mkdir(migrationsDir);
   this.mkdir(srcDir);
   this.mkdir(modelsDir);
   this.mkdir(routesDir);
@@ -84,8 +85,6 @@ AngularLuminusGenerator.prototype.app = function app() {
   this.template('src/app/models/_db.clj', modelsDir + 'db.clj');
   this.template('src/app/models/_schema.clj', modelsDir + 'schema.clj');
   this.template('src/app/routes/_home.clj', routesDir + 'home.clj');
-  this.template('src/lobos/_config.clj', lobosDir + 'config.clj');
-  this.template('src/lobos/_migrations.clj', lobosDir + 'migrations.clj');
   this.template('test/app/test/_handler.clj', testDir + 'handler.clj');
 
   var publicCssDir = publicDir + 'css/';

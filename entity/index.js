@@ -13,6 +13,10 @@ var EntityGenerator = module.exports = function EntityGenerator(args, options, c
 
   console.log('You called the entity subgenerator with the argument ' + this.name + '.');
 
+  this.on('end', function () {
+    return this.spawnCommand('lein', ['ragtime', 'migrate']);
+  });
+
   fs.readFile('generator.json', 'utf8', function (err, data) {
     if (err) {
       console.log('Error: ' + err);
@@ -127,17 +131,17 @@ EntityGenerator.prototype.askFor = function askFor() {
     var attrType = props.attrType;
     var attrImplType = props.attrType;
     if (attrType === 'String') {
-      attrImplType = 'varchar';
+      attrImplType = 'VARCHAR';
     } else if (attrType === 'Integer') {
-      attrImplType = 'integer';
+      attrImplType = 'INTEGER';
     } else if (attrType === 'Float') {
-      attrImplType = 'float';
+      attrImplType = 'FLOAT';
     } else if (attrType === 'Boolean') {
-      attrImplType = 'boolean';
+      attrImplType = 'BOOLEAN';
     } else if (attrType === 'Date') {
-      attrImplType = 'date';
+      attrImplType = 'DATE';
     } else if (attrType === 'Enum') {
-      attrImplType = 'varchar';
+      attrImplType = 'VARCHAR';
     }
     this.attrs = _.reject(this.attrs, function (attr) { return attr.attrName === props.attrName; });
     this.attrs.push({ 
@@ -171,18 +175,22 @@ EntityGenerator.prototype.files = function files() {
   this.generatorConfig.entities = this.entities;
   this.generatorConfigStr = JSON.stringify(this.generatorConfig, null, '\t');
 
+  var migrationsDir = 'migrations/'
   var srcDir = 'src/'
   var appDir = srcDir + this.baseName + '/';
   var modelsDir = appDir + 'models/';
   var routesDir = appDir + 'routes/';
-  var lobosDir = srcDir + 'lobos/';
   this.template('_generator.json', 'generator.json');
   this.template('src/app/routes/_entities.clj', routesDir + pluralize(this.name) + '.clj');
   this.template('../../app/templates/src/app/_handler.clj', appDir + 'handler.clj');
   this.template('../../app/templates/src/app/models/_db.clj', modelsDir + 'db.clj');
   this.template('../../app/templates/src/app/models/_schema.clj', modelsDir + 'schema.clj');
   this.template('../../app/templates/src/app/routes/_home.clj', routesDir + 'home.clj');
-  this.template('../../app/templates/src/lobos/_migrations.clj', lobosDir + 'migrations.clj');
+
+  var d = new Date()
+  var dateStr = '' + d.getFullYear() + (d.getMonth() + 1) + d.getDate() + d.getHours() + d.getMinutes() + d.getSeconds()
+  this.template('migrations/_migration.up.sql', migrationsDir + dateStr + '_create_' + pluralize(this.name) + '.up.sql');
+  this.template('migrations/_migration.down.sql', migrationsDir + dateStr + '_create_' + pluralize(this.name) + '.down.sql');
 
   var publicDir = 'resources/public/';
   var publicCssDir = publicDir + 'css/';

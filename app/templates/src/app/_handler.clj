@@ -1,7 +1,7 @@
 (ns <%= baseName %>.handler
   <% if (entities.length > 0) { %>
   (:use <% _.each(entities, function (entity) { %>
-        <%= baseName %>.routes.<%= pluralize(entity.name) %><% })}; %>)
+        <%= baseName %>.routes.<%= pluralize(entity.name) %><% }) %>)<% }; %>
   (:require [compojure.core :refer [defroutes]]
             [<%= baseName %>.routes.home :refer [home-routes]]
             [<%= baseName %>.models.schema :as schema]
@@ -36,12 +36,7 @@
 
   (if (env :selmer-dev) (parser/cache-off!))
 
-  ;;initialize the database if needed
-  (if-not (schema/actualized?)
-    (schema/actualize))
-
   (timbre/info "<%= baseName %> started successfully"))
-
 
 (defn destroy
   "destroy will be called when your application
