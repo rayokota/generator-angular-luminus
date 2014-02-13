@@ -6,7 +6,7 @@ Luminus is a Clojure-based micro-framework.  For AngularJS integration with othe
 
 ## Installation
 
-Install [Git](http://git-scm.com), [node.js](http://nodejs.org), and [Lein](http://leiningen.org/).
+Install [Git](http://git-scm.com), [node.js](http://nodejs.org), [Java](https://www.java.com), and [Lein](http://leiningen.org/).
 
 Install Yeoman:
 
