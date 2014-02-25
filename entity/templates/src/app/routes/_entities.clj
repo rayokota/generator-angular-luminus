@@ -1,8 +1,8 @@
-(ns myapp.routes.<%= pluralize(name) %>
+(ns <%= baseName %>.routes.<%= pluralize(name) %>
   (:use compojure.core)
   (:require [noir.io :as io]
             [noir.response :as resp]
-            [myapp.models.db :as db]))
+            [<%= baseName %>.models.db :as db]))
 
 (defroutes <%= name %>-routes
   (context "/<%= baseName %>/<%= pluralize(name) %>" []
