@@ -1,6 +1,6 @@
 {
   "name": "generator-angular-luminus",
-  "version": "0.1.4",
+  "version": "0.1.5",
   "description": "A Yeoman generator for AngularJS + Luminus",
   "keywords": [
     "yeoman-generator",
@@ -10,7 +10,7 @@
     "Ring",
     "Korma",
     "AngularJS",
-    "Twitter Bootstrap"
+    "Bootstrap"
   ],
   "homepage": "https://github.com/rayokota/generator-angular-luminus",
   "bugs": "https://github.com/rayokota/generator-angular-luminus/issues",
