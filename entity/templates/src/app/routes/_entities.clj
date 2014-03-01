@@ -14,4 +14,6 @@
     (PUT "/:id"
       [id <% _.each(attrs, function (attr) { %><%= attr.attrName %> <% }); %>]
       (resp/json (db/update-<%= name %> (Integer/valueOf id) <% _.each(attrs, function (attr) { %><%= attr.attrName %> <% }); %>)))
-    (DELETE "/:id" [id] (resp/json (db/delete-<%= name %> (Integer/valueOf id))))))
+    (DELETE "/:id" [id] 
+      (db/delete-<%= name %> (Integer/valueOf id)) 
+      {:status 204})))
