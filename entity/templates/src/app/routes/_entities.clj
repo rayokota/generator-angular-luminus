@@ -10,7 +10,8 @@
     (GET "/:id" [id] (resp/json (db/get-<%= name %> (Integer/valueOf id))))
     (POST "/"
       [<% _.each(attrs, function (attr) { %><%= attr.attrName %> <% }); %>]
-      (db/save-<%= name %> <% _.each(attrs, function (attr) { %><%= attr.attrName %> <% }); %>))
+      (db/save-<%= name %> <% _.each(attrs, function (attr) { %><%= attr.attrName %> <% }); %>)
+      {:status 201})
     (PUT "/:id"
       [id <% _.each(attrs, function (attr) { %><%= attr.attrName %> <% }); %>]
       (resp/json (db/update-<%= name %> (Integer/valueOf id) <% _.each(attrs, function (attr) { %><%= attr.attrName %> <% }); %>)))
