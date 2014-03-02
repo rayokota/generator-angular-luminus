@@ -16,6 +16,8 @@ Install the Angular-Luminus generator:
 
     npm install -g generator-angular-luminus
 
+The above prerequisites can be installed to a VM using the [Angular-Luminus provisioner](https://github.com/rayokota/provision-angular-luminus).
+
 ## Creating a Luminus service
 
 In a new directory, generate the service:
